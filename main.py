@@ -118,7 +118,7 @@ def mover(move):
     else:
         return 0
 
-
+#To shoot arrow
 def arrowShoot(direction):
     global row
     global col
