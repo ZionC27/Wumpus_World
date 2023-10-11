@@ -5,6 +5,7 @@
 # breeze  3
 # stink   4
 # shine   5
+# location 6
 
 # Game state
 # won  1 
