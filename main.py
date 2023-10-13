@@ -36,6 +36,8 @@ def gettileinfo(tile):
         op = op + "N/Y " 
     if tile[0] == 1:
         op = op + "Has Wumpy " 
+    if tile[0] == 3:
+        op = op + "Has Dead Wumpy "     
     if tile[1] == 1:
         op = op + "Has pit " 
     if tile[2] == 1:
@@ -74,6 +76,8 @@ def mover(move):
             col = col + 0
             if ifgameOver(row, col) == 1:
                 return 1
+            elif ifgameOver(row, col) == 0:
+                return 5
         else:
             return 0
     elif move == "d":
@@ -83,6 +87,8 @@ def mover(move):
             col = col + 0
             if ifgameOver(row, col) == 1:
                 return 1
+            elif ifgameOver(row, col) == 0:
+                return 5
         else:
             return 0
     elif move == "l":
@@ -92,6 +98,8 @@ def mover(move):
             col = col + -1
             if ifgameOver(row, col) == 1:
                 return 1
+            elif ifgameOver(row, col) == 0:
+                return 5
         else:
             return 0
     elif move == "r":
@@ -101,6 +109,8 @@ def mover(move):
             col = col + 1
             if ifgameOver(row, col) == 1:
                 return 1
+            elif ifgameOver(row, col) == 0:
+                return 5
         else:
             return 0
     elif move == "shoot":
@@ -129,6 +139,7 @@ def arrowShoot(direction):
         else:
             for x in range(row-1, -1, -1):
                 if mapwithele[x][col][0] == 1:
+                    mapwithele[x][col][0] = 3
                     return 1
     elif direction== "d":
         if checkmovevalid(1, 0) == False:
@@ -136,6 +147,7 @@ def arrowShoot(direction):
         else:
             for x in range(row+1, 5, 1):
                 if mapwithele[x][col][0] == 1:
+                    mapwithele[x][col][0] = 3
                     return 1
     elif direction== "l":
         if checkmovevalid(0, -1) == False:
@@ -143,6 +155,7 @@ def arrowShoot(direction):
         else:
             for x in range(col-1, -1, -1):
                 if mapwithele[row][x][0] == 1:
+                    mapwithele[row][x][0] = 3
                     return 1
     elif direction== "r":
         if checkmovevalid(0, 1) == False:
@@ -150,6 +163,7 @@ def arrowShoot(direction):
         else:
             for x in range(col+1, 5, 1):
                 if mapwithele[row][x][0] == 1:
+                    mapwithele[row][x][0] = 3
                     return 1
     return 2
 
@@ -173,8 +187,11 @@ def shootdirection():
 
 #if the char is dead
 def ifgameOver(r , c):
-    if mapwithele[r][c][1] == 1 or mapwithele[r][c][0]:
+
+    if mapwithele[r][c][1] == 1 or mapwithele[r][c][0] == 1:
         return 1
+    elif mapwithele[r][c][2] == 1:
+        return 0
 
 #shows the map for the player
 def showplayermap():
@@ -229,12 +246,15 @@ def movertogo():
             gamend = True
             print("You dead")
         elif mademove == 2:
-            gamend = True
-            print("Wumpy dead YOU WIN")
+            #gamend = True
+            print("Wumpy Dead")
         elif mademove == 3:
             print("Can't shoot")
         elif mademove == 4:
             print("You miss")
+        elif mademove == 5:
+            gamend = True
+            print("You win")
         else:
             print(str(row) + " " + str(col))
 
